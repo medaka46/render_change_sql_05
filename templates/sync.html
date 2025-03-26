@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Sync with GitHub - SQLite Sync Demo{% endblock %}
+
+{% block header %}Sync Database with GitHub{% endblock %}
+
+{% block content %}
+<div>
+    <h2>GitHub Database Synchronization</h2>
+    <p>This will upload your current database to your GitHub repository.</p>
+    
+    <form action="/sync" method="post">
+        <p>Repository: <strong>{{ environ.get('GITHUB_REPO_OWNER', 'Not Set') }}/{{ environ.get('GITHUB_REPO_NAME', 'Not Set') }}</strong></p>
+        <p>Database Path: <strong>{{ environ.get('GITHUB_DB_PATH', 'database.db') }}</strong></p>
+        <button type="submit" class="btn">Sync Now</button>
+    </form>
+    
+    {% if result %}
+    <div style="margin-top: 20px;" class="alert {% if result.success %}alert-success{% else %}alert-danger{% endif %}">
+        <h3>Sync Result:</h3>
+        <p>{{ result.message }}</p>
+        {% if result.success and result.commit %}
+        <p><a href="{{ result.commit }}" target="_blank">View Commit on GitHub</a></p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

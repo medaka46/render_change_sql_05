@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Home - GitHub SQLite Sync Demo{% endblock %}
+
+{% block header %}Welcome to GitHub SQLite Sync Demo{% endblock %}
+
+{% block content %}
+<div class="info-panel">
+    <h2>About This Application</h2>
+    <p>This application demonstrates how to use a SQLite database with FastAPI and synchronize changes back to a GitHub repository.</p>
+    
+    <h3>How It Works</h3>
+    <ol>
+        <li>The application uses SQLAlchemy with SQLite for data storage</li>
+        <li>Changes made to the database are stored locally</li>
+        <li>When you click "Sync with GitHub", the database is uploaded to your GitHub repository</li>
+        <li>This allows your data to persist between deployments on Render</li>
+    </ol>
+    
+    <h3>GitHub Token Status</h3>
+    {% if token_available %}
+    <p style="color: green;">✅ GitHub token is configured</p>
+    {% else %}
+    <p style="color: red;">❌ GitHub token is not configured. Please add it to your environment variables.</p>
+    {% endif %}
+    
+    <div style="margin-top: 20px;">
+        <a href="/tasks" class="btn">Manage Tasks</a>
+        <a href="/sync" class="btn">Sync with GitHub</a>
+    </div>
+</div>
+{% endblock %}
